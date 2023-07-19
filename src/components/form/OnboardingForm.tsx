@@ -55,14 +55,6 @@ const schema: RJSFSchema = {
                     type: "string",
                   },
                 },
-                moduleURLs: {
-                  type: "array",
-                  title: "Module URLs",
-                  items: {
-                    type: "string",
-                    title: "Module URL",
-                  },
-                },
               },
             },
           },
@@ -74,6 +66,27 @@ const schema: RJSFSchema = {
       title: "Custom Testcase Fields",
       items: {
         $ref: "#/definitions/testCaseField",
+      },
+    },
+    moduleURLs: {
+      type: "array",
+      title: "Module URLs",
+      items: {
+        type: "object",
+        title: "Module URL",
+        properties: {
+          categoryNames: {
+            type: "array",
+            title: "Category Names",
+            items: {
+              type: "string",
+            },
+          },
+          url: {
+            type: "string",
+            title: "URL",
+          },
+        },
       },
     },
   },
@@ -90,7 +103,7 @@ const schema: RJSFSchema = {
         type: {
           type: "string",
           title: "Test Case Field Type",
-          examples: ["string", "number", "boolean", "date", "array", "object"],
+          examples: ["TextField", "Dropdown", "TextArea"],
         },
         description: {
           type: "string",
@@ -107,7 +120,7 @@ const schema: RJSFSchema = {
 };
 
 const CustomValuesWidget = (props) => {
-  const { value = [], onChange } = props;
+  const { value = [], onChange, label, placeholder } = props;
   const [inputValue, setInputValue] = useState(value.join(", "));
 
   const handleInputChange = (event) => {
@@ -122,40 +135,47 @@ const CustomValuesWidget = (props) => {
   return (
     <TextField
       variant="outlined"
-      label="Values"
+      label={label}
       value={inputValue}
       onChange={handleInputChange}
       onBlur={handleBlur}
+      placeholder={placeholder}
       fullWidth
     />
   );
 };
 
-const URLsInputBox = (props) => {
-  const { value = [], onChange } = props;
-  const [inputValue, setInputValue] = useState(value.join("\n"));
+const customValidate = (formData, errors) => {
+  const categories = formData.categories.map((category) => category.name);
+  const moduleURLs = formData.moduleURLs;
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
+  moduleURLs.forEach((moduleURL, index: number) => {
+    moduleURL.categoryNames.forEach((categoryName) => {
+      if (!categories.includes(categoryName)) {
+        errors.moduleURLs[index].categoryNames.addError(
+          `Category ${categoryName} not found in categories`
+        );
+      }
+    });
+  });
 
-  const handleBlur = () => {
-    const newValues = inputValue.split("\n").map((v) => v.trim());
-    onChange(newValues);
-  };
+  categories.forEach((category, catIndex) => {
+    const categoryValues = formData.categories.find(
+      (c) => c.name === category
+    ).values;
+    const subcategories = formData.categories.find(
+      (c) => c.name === category
+    ).subcategories;
+    subcategories.forEach((subcategory, subIndex) => {
+      if (!categoryValues.includes(subcategory.name)) {
+        errors.categories[catIndex].subcategories[subIndex].name.addError(
+          `Subcategory ${subcategory.name} not found in category ${category}`
+        );
+      }
+    });
+  });
 
-  return (
-    <TextField
-      variant="outlined"
-      label="URLs"
-      value={inputValue}
-      onChange={handleInputChange}
-      onBlur={handleBlur}
-      fullWidth
-      multiline
-      rows={6}
-    />
-  );
+  return errors;
 };
 
 const uiSchema: UiSchema = {
@@ -180,6 +200,15 @@ const uiSchema: UiSchema = {
       },
     },
   },
+  moduleURLs: {
+    items: {
+      categoryNames: {
+        label: "Category Names",
+        "ui:widget": CustomValuesWidget,
+        "ui:placeholder": "Enter comma-separated list of category names",
+      },
+    },
+  },
   categories: {
     "ui:options": {
       addable: true,
@@ -191,6 +220,7 @@ const uiSchema: UiSchema = {
         "ui:placeholder": "Enter category name",
       },
       values: {
+        label: "Category Values",
         "ui:widget": CustomValuesWidget,
         "ui:placeholder": "Enter comma-separated list of values",
       },
@@ -205,12 +235,9 @@ const uiSchema: UiSchema = {
             "ui:placeholder": "Enter subcategory name",
           },
           configurations: {
+            label: "Configurations",
             "ui:widget": CustomValuesWidget,
             "ui:placeholder": "Enter comma-separated list of configurations",
-          },
-          moduleURLs: {
-            "ui:widget": URLsInputBox,
-            "ui:placeholder": "Enter comma-separated list of Module URLs",
           },
         },
       },
@@ -230,6 +257,8 @@ const OnboardingForm = () => {
         uiSchema={uiSchema}
         onSubmit={onSubmit}
         validator={validator}
+        customValidate={customValidate}
+        // liveValidate
       />
     </div>
   );
