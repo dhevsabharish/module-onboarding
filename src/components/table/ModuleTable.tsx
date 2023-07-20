@@ -16,6 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import CategoryTable from "./CategoryTable";
 
 function ModuleTable() {
   const [expandedRows, setExpandedRows] = useState<any>([]);
@@ -57,9 +58,9 @@ function ModuleTable() {
         <Table aria-label="module table">
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell />
-              <TableCell>Serial No.</TableCell>
+              <TableCell style={{ width: "10px" }} />
+              <TableCell style={{ width: "10px" }} />
+              <TableCell style={{ width: "50px" }}>S/N</TableCell>
               <TableCell>Module Name</TableCell>
               <TableCell>Module Protocol</TableCell>
             </TableRow>
@@ -107,7 +108,7 @@ function ModuleTable() {
                           component={Paper}
                           className="table-container"
                         >
-                          <Table size="small" aria-label="testcase field table">
+                          <Table aria-label="testcase field table">
                             <TableHead>
                               <TableRow>
                                 <TableCell>Name</TableCell>
@@ -134,7 +135,7 @@ function ModuleTable() {
                           component={Paper}
                           className="table-container"
                         >
-                          <Table size="small" aria-label="module urls table">
+                          <Table aria-label="module urls table">
                             <TableHead>
                               <TableRow>
                                 <TableCell>Category Name</TableCell>
@@ -151,19 +152,23 @@ function ModuleTable() {
                             </TableBody>
                           </Table>
                         </TableContainer>
+                        {module.categories && (
+                          <CategoryTable categories={module.categories} />
+                        )}
                       </Box>
                     </Collapse>
                   </TableCell>
                 </TableRow>
               </React.Fragment>
             ))}
-            <TableRow>
-              <TableCell colSpan={3}>
-                <TableCell colSpan={3}>
+            {checkedRows.length >= 1 && (
+              <TableRow>
+                <TableCell colSpan={4}>
                   <TextField
                     label="Group into..."
                     value={appName}
                     onChange={handleAppnameChange}
+                    fullWidth
                   />
                 </TableCell>
                 <TableCell>
@@ -171,8 +176,8 @@ function ModuleTable() {
                     Group
                   </Button>
                 </TableCell>
-              </TableCell>
-            </TableRow>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -212,6 +217,36 @@ const modules = [
         id: 2,
         categoryName: "Category 2",
         url: "https://example.com",
+      },
+    ],
+    categories: [
+      {
+        name: "Device",
+        configurations: ["TV", "Desktop", "Watch", "Mobile"],
+        subcategories: [
+          {
+            name: "Mobile",
+            configurations: ["config1", "config2"],
+          },
+          {
+            name: "TV",
+            configurations: ["config1", "config2"],
+          },
+        ],
+      },
+      {
+        name: "Language",
+        configurations: ["English", "Hindi", "French", "German"],
+        subcategories: [
+          {
+            name: "Tamil",
+            configurations: ["config1", "config2"],
+          },
+          {
+            name: "English",
+            configurations: ["config1", "config2"],
+          },
+        ],
       },
     ],
   },
