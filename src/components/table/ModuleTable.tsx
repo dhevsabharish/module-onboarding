@@ -17,6 +17,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import CategoryTable from "./CategoryTable";
+import Delete from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 function ModuleTable() {
   const [expandedRows, setExpandedRows] = useState<any>([]);
@@ -63,6 +65,8 @@ function ModuleTable() {
               <TableCell style={{ width: "50px" }}>S/N</TableCell>
               <TableCell>Module Name</TableCell>
               <TableCell>Module Protocol</TableCell>
+              <TableCell style={{ width: "10px" }} />
+              <TableCell style={{ width: "10px" }} />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -92,6 +96,16 @@ function ModuleTable() {
                   <TableCell>{module.serialNo}</TableCell>
                   <TableCell>{module.name}</TableCell>
                   <TableCell>{module.protocol}</TableCell>
+                  <TableCell>
+                    <IconButton aria-label="delete" size="small">
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell>
+                    <IconButton aria-label="edit" size="small">
+                      <EditIcon />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell
