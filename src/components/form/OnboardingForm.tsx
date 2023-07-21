@@ -44,9 +44,13 @@ const schema: RJSFSchema = {
               type: "object",
               title: "Subcategory",
               properties: {
-                name: {
+                subcatName: {
                   type: "string",
-                  title: "Name",
+                  title: "Subcategory Name",
+                },
+                parentCatVal: {
+                  type: "string",
+                  title: "Parent Category Name",
                 },
                 configurations: {
                   type: "array",
@@ -231,8 +235,11 @@ const uiSchema: UiSchema = {
           removable: true,
         },
         items: {
-          name: {
+          subcatName: {
             "ui:placeholder": "Enter subcategory name",
+          },
+          parentCatVal: {
+            "ui:placeholder": "Enter parent category value",
           },
           configurations: {
             label: "Configurations",
