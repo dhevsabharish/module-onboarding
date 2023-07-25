@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./moduletable.css";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -19,8 +19,21 @@ import TextField from "@mui/material/TextField";
 import CategoryTable from "./CategoryTable";
 import Delete from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import axios from "axios";
 
 function ModuleTable() {
+  const [modules, setModules] = useState<any>([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/modules")
+      .then((res) => {
+        setModules(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const [expandedRows, setExpandedRows] = useState<any>([]);
   const [checkedRows, setCheckedRows] = useState<any>([]);
   const [appName, setAppName] = useState<string>("");
@@ -71,7 +84,7 @@ function ModuleTable() {
           </TableHead>
           <TableBody>
             {modules.map((module, index) => (
-              <React.Fragment key={module.id}>
+              <React.Fragment key={index}>
                 <TableRow hover>
                   <TableCell>
                     <Checkbox
@@ -93,7 +106,7 @@ function ModuleTable() {
                       )}
                     </IconButton>
                   </TableCell>
-                  <TableCell>{module.serialNo}</TableCell>
+                  <TableCell>{index + 1}</TableCell>
                   <TableCell>{module.moduleName}</TableCell>
                   <TableCell>{module.protocol}</TableCell>
                   <TableCell>
@@ -132,8 +145,8 @@ function ModuleTable() {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {module.testCaseFields.map((field) => (
-                                <TableRow key={field.id}>
+                              {module.testCaseFields.map((field, index) => (
+                                <TableRow key={index}>
                                   <TableCell>{field.name}</TableCell>
                                   <TableCell>{field.type}</TableCell>
                                   <TableCell>
@@ -152,23 +165,25 @@ function ModuleTable() {
                           <Table aria-label="module urls table">
                             <TableHead>
                               <TableRow>
-                                <TableCell>Category Name</TableCell>
+                                <TableCell>Category Names</TableCell>
                                 <TableCell>URL</TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {module.urls.map((url) => (
-                                <TableRow key={url.id}>
-                                  <TableCell>{url.categoryName}</TableCell>
+                              {module.moduleURLs.map((url, index) => (
+                                <TableRow key={index}>
+                                  <TableCell>
+                                    {url.categoryNames.join(", ")}
+                                  </TableCell>
                                   <TableCell>{url.url}</TableCell>
                                 </TableRow>
                               ))}
                             </TableBody>
                           </Table>
                         </TableContainer>
-                        {module.categories && (
+                        {/* {module.categories && (
                           <CategoryTable categories={module.categories} />
-                        )}
+                        )} */}
                       </Box>
                     </Collapse>
                   </TableCell>
@@ -201,35 +216,29 @@ function ModuleTable() {
 
 const modules = [
   {
-    id: 1,
-    serialNo: 1,
     moduleName: "Module 1",
     protocol: "Protocol 1",
     testCaseFields: [
       {
-        id: 1,
         name: "Field 1",
         type: "TextArea",
         required: true,
         description: "Description 1",
       },
       {
-        id: 2,
         name: "Field 2",
         type: "Dropdown",
         required: false,
         description: "Description 2",
       },
     ],
-    urls: [
+    moduleURLs: [
       {
-        id: 1,
-        categoryName: "Category 1",
+        categoryNames: ["Category 1", "Category 2", "Category 3"],
         url: "https://example.com",
       },
       {
-        id: 2,
-        categoryName: "Category 2",
+        categoryNames: ["Category 2", "Category 3"],
         url: "https://example.com",
       },
     ],
@@ -269,23 +278,19 @@ const modules = [
     ],
   },
   {
-    id: 2,
-    serialNo: 2,
     moduleName: "Module 2",
     protocol: "Protocol 2",
     testCaseFields: [
       {
-        id: 3,
         name: "Field 3",
         type: "TextField",
         required: true,
         description: "Description 3",
       },
     ],
-    urls: [
+    moduleURLs: [
       {
-        id: 3,
-        categoryName: "Category 3",
+        categoryNames: ["Category 3", "Category 4"],
         url: "https://example.com",
       },
     ],
