@@ -21,6 +21,7 @@ export default function CategoryTable(props) {
   const [columns] = useState([
     { name: "name", title: "Name" },
     { name: "configurations", title: "Configurations" },
+    { name: "subcategory", title: "Subcategory" },
   ]);
   const [data] = useState(props.categories);
   const [tableColumnExtensions] = useState([

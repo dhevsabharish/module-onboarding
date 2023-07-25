@@ -239,10 +239,12 @@ const modules = [
         configurations: ["TV", "Desktop", "Watch", "Mobile"],
         subcategories: [
           {
+            subcategory: "sc1",
             name: "Mobile",
             configurations: ["config1", "config2"],
           },
           {
+            subcategory: "sc2",
             name: "TV",
             configurations: ["config1", "config2"],
           },
@@ -253,10 +255,12 @@ const modules = [
         configurations: ["English", "Hindi", "French", "German"],
         subcategories: [
           {
+            subcategory: "sc1",
             name: "Tamil",
             configurations: ["config1", "config2"],
           },
           {
+            subcategory: "sc2",
             name: "English",
             configurations: ["config1", "config2"],
           },

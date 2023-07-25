@@ -12,7 +12,7 @@ const schema: RJSFSchema = {
     protocol: {
       type: "string",
       title: "Module Protocol",
-      examples: ["http", "gRPC"],
+      enum: ["http", "gRPC"],
     },
     categories: {
       type: "array",
@@ -114,6 +114,54 @@ const schema: RJSFSchema = {
         },
       },
       required: ["name", "type", "required"],
+    },
+  },
+  dependencies: {
+    protocol: {
+      oneOf: [
+        {
+          properties: {
+            protocol: {
+              const: "http",
+            },
+          },
+          default: {
+            testCaseFields: [
+              {
+                name: "httpHeader",
+                type: "textfield",
+                required: true,
+              },
+              {
+                name: "httpBody",
+                type: "textarea",
+                required: false,
+              },
+            ],
+          },
+        },
+        {
+          properties: {
+            protocol: {
+              const: "gRPC",
+            },
+          },
+          default: {
+            testCaseFields: [
+              {
+                name: "gRPCHeader",
+                type: "textfield",
+                required: true,
+              },
+              {
+                name: "gRPCBody",
+                type: "textarea",
+                required: false,
+              },
+            ],
+          },
+        },
+      ],
     },
   },
 };
