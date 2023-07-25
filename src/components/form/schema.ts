@@ -5,7 +5,7 @@ const schema: RJSFSchema = {
   description: "A Simple Form for developers to simplify Module Onboarding",
   type: "object",
   properties: {
-    name: {
+    moduleName: {
       type: "string",
       title: "Module Name",
     },
@@ -89,7 +89,7 @@ const schema: RJSFSchema = {
       },
     },
   },
-  required: ["name", "protocol"],
+  required: ["moduleName", "protocol"],
   definitions: {
     testCaseField: {
       type: "object",
@@ -129,12 +129,12 @@ const schema: RJSFSchema = {
             testCaseFields: [
               {
                 name: "httpHeader",
-                type: "textfield",
+                type: "TextField",
                 required: true,
               },
               {
                 name: "httpBody",
-                type: "textarea",
+                type: "TextArea",
                 required: false,
               },
             ],
@@ -150,12 +150,12 @@ const schema: RJSFSchema = {
             testCaseFields: [
               {
                 name: "gRPCHeader",
-                type: "textfield",
+                type: "TextAield",
                 required: true,
               },
               {
                 name: "gRPCBody",
-                type: "textarea",
+                type: "TextArea",
                 required: false,
               },
             ],

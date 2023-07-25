@@ -31,7 +31,7 @@ function ModuleTable() {
 
   const handleCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    moduleName: string
+    moduleName: any
   ) => {
     if (event.target.checked) {
       setCheckedRows([...checkedRows, moduleName]);
@@ -76,7 +76,7 @@ function ModuleTable() {
                   <TableCell>
                     <Checkbox
                       onChange={(event) =>
-                        handleCheckboxChange(event, module.name)
+                        handleCheckboxChange(event, module.moduleName)
                       }
                     />
                   </TableCell>
@@ -94,7 +94,7 @@ function ModuleTable() {
                     </IconButton>
                   </TableCell>
                   <TableCell>{module.serialNo}</TableCell>
-                  <TableCell>{module.name}</TableCell>
+                  <TableCell>{module.moduleName}</TableCell>
                   <TableCell>{module.protocol}</TableCell>
                   <TableCell>
                     <IconButton aria-label="delete" size="small">
@@ -203,7 +203,7 @@ const modules = [
   {
     id: 1,
     serialNo: 1,
-    name: "Module 1",
+    moduleName: "Module 1",
     protocol: "Protocol 1",
     testCaseFields: [
       {
@@ -271,7 +271,7 @@ const modules = [
   {
     id: 2,
     serialNo: 2,
-    name: "Module 2",
+    moduleName: "Module 2",
     protocol: "Protocol 2",
     testCaseFields: [
       {

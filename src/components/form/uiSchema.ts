@@ -2,7 +2,7 @@ import { UiSchema } from "@rjsf/utils";
 import CustomValuesWidget from "./customValuesWidget";
 
 const uiSchema: UiSchema = {
-  name: {
+  moduleName: {
     "ui:autofocus": true,
     "ui:emptyValue": "",
   },

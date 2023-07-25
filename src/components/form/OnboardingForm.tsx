@@ -4,10 +4,22 @@ import Form from "@rjsf/mui";
 import schema from "./schema";
 import uiSchema from "./uiSchema";
 import customValidate from "./customValidate";
+import axios from "axios";
+import { useState } from "react";
 
 const OnboardingForm = () => {
+  const [formData, setFormData] = useState({});
+
   const onSubmit = (data) => {
-    console.log("Data submitted: ", data.formData);
+    axios
+      .post("http://localhost:8080/api/modules", data.formData)
+      .then(() => {
+        alert("Form submitted successfully!");
+        setFormData({});
+      })
+      .catch(() => {
+        alert("Form submission failed.");
+      });
   };
 
   return (
@@ -18,6 +30,7 @@ const OnboardingForm = () => {
         onSubmit={onSubmit}
         validator={validator}
         customValidate={customValidate}
+        formData={formData}
       />
     </div>
   );
