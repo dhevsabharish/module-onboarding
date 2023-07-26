@@ -17,6 +17,10 @@ const uiSchema: UiSchema = {
       type: {
         "ui:emptyValue": "",
       },
+      "ui:order": ["name", "type", "DropdownValues", "*",  "description", "required"],
+      DropdownValues: {
+        "ui:widget": CustomValuesWidget,
+      },
       description: {
         "ui:widget": "textarea",
       },

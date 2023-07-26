@@ -81,14 +81,14 @@ const schema: RJSFSchema = {
         },
       },
     },
-    testCaseFields: {
-      type: "array",
-      title: "Custom Testcase Fields",
-      items: {
-        $ref: "#/definitions/testCaseField",
-      },
-      minItems: 8
-    },
+    // testCaseFields: {
+    //   type: "array",
+    //   title: "Custom Testcase Fields",
+    //   items: {
+    //     $ref: "#/definitions/testCaseField",
+    //   },
+    //   minItems: 8
+    // },
   },
   required: ["moduleName", "protocol"],
   definitions: {
@@ -115,6 +115,40 @@ const schema: RJSFSchema = {
         },
       },
       required: ["name", "type", "required"],
+      dependencies: {
+        type: {
+          oneOf: [
+            {
+              properties: {
+                type: {
+                  const: "Dropdown",
+                },
+                DropdownValues: {
+                  type: "array",
+                  title: "Dropdown Values",
+                  items: {
+                    type: "string",
+                  }
+                }
+              },
+            },
+            {
+              properties: {
+                type: {
+                  const: "TextField",
+                }
+              }
+            },
+            {
+              properties: {
+                type: {
+                  const: "TextArea",
+                }
+              }
+            }
+          ]
+        }
+      },
     },
   },
   dependencies: {
@@ -125,50 +159,55 @@ const schema: RJSFSchema = {
             protocol: {
               const: "HTTP",
             },
-          },
-          default: {
-            testCaseFields: [
-              {
-                name: "HTTP Method",
-                type: "Dropdown",
-                required: true,
+            testCaseFields: {
+              type: "array",
+              title: "Custom Testcase Fields",
+              items: {
+                $ref: "#/definitions/testCaseField",
               },
-              {
-                name: "HTTP URL Path",
-                type: "TextField",
-                required: true,
-              },
-              {
-                name: "Request Headers",
-                type: "TextArea",
-                required: true,
-              },
-              {
-                name: "Request Body",
-                type: "TextArea",
-                required: false,
-              },
-              {
-                name: "Expected Response Code",
-                type: "TextField",
-                required: false,
-              },
-              {
-                name: "Expected Response",
-                type: "TextArea",
-                required: false,
-              },
-              {
-                name: "Expected Content Type",
-                type: "TextField",
-                required: false,
-              },
-              {
-                name: "Expected Buffer Length",
-                type: "TextField",
-                required: false,
-              },
-            ],
+              default: [
+                {
+                  name: "HTTP Method",
+                  type: "Dropdown",
+                  required: true,
+                },
+                {
+                  name: "HTTP URL Path",
+                  type: "TextField",
+                  required: true,
+                },
+                {
+                  name: "Request Headers",
+                  type: "TextArea",
+                  required: true,
+                },
+                {
+                  name: "Request Body",
+                  type: "TextArea",
+                  required: false,
+                },
+                {
+                  name: "Expected Response Code",
+                  type: "TextField",
+                  required: false,
+                },
+                {
+                  name: "Expected Response",
+                  type: "TextArea",
+                  required: false,
+                },
+                {
+                  name: "Expected Content Type",
+                  type: "TextField",
+                  required: false,
+                },
+                {
+                  name: "Expected Buffer Length",
+                  type: "TextField",
+                  required: false,
+                },
+              ],
+            },
           },
         },
         {
@@ -176,51 +215,55 @@ const schema: RJSFSchema = {
             protocol: {
               const: "gRPC",
             },
-          },
-          default: {
-            testCaseFields: [
-              {
-                "name": "Service Method",
-                "type": "TextField",
-                "required": true
+            testCaseFields: {
+              type: "array",
+              title: "Custom Testcase Fields",
+              items: {
+                $ref: "#/definitions/testCaseField",
               },
-              {
-                "name": "Request Message",
-                "type": "TextArea",
-                "required": true
-              },
-              {
-                "name": "Response Message",
-                "type": "TextArea",
-                "required": true
-              },
-              {
-                "name": "RPC Endpoint",
-                "type": "TextField",
-                "required": true
-              },
-              {
-                "name": "Serialization and Deserialization",
-                "type": "Dropdown",
-                "required": true
-              },
-              {
-                "name": "SSL/TLS",
-                "type": "Dropdown",
-                "required": false
-              },
-              {
-                "name": "Error Handling",
-                "type": "TextField",
-                "required": false
-              },
-              {
-                "name": "Metadata",
-                "type": "TextArea",
-                "required": false
-              }
-            ]
-            ,
+              default: [
+                {
+                  "name": "Service Method",
+                  "type": "TextField",
+                  "required": true
+                },
+                {
+                  "name": "Request Message",
+                  "type": "TextArea",
+                  "required": true
+                },
+                {
+                  "name": "Response Message",
+                  "type": "TextArea",
+                  "required": true
+                },
+                {
+                  "name": "RPC Endpoint",
+                  "type": "TextField",
+                  "required": true
+                },
+                {
+                  "name": "Serialization and Deserialization",
+                  "type": "Dropdown",
+                  "required": true
+                },
+                {
+                  "name": "SSL/TLS",
+                  "type": "Dropdown",
+                  "required": false
+                },
+                {
+                  "name": "Error Handling",
+                  "type": "TextField",
+                  "required": false
+                },
+                {
+                  "name": "Metadata",
+                  "type": "TextArea",
+                  "required": false
+                }
+              ]
+            }
           },
         },
       ],

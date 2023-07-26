@@ -47,18 +47,31 @@ function ModuleTable() {
 
   const handleCheckboxChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    moduleName: any
+    _id: any
   ) => {
     if (event.target.checked) {
-      setCheckedRows([...checkedRows, moduleName]);
+      setCheckedRows([...checkedRows, _id]);
     } else {
-      setCheckedRows(checkedRows.filter((row) => row !== moduleName));
+      setCheckedRows(checkedRows.filter((row) => row !== _id));
     }
   };
 
   const handleGroupButtonClick = () => {
-    console.log(appName);
-    console.log(checkedRows);
+    const url = "http://localhost:8080/api/modules";
+    const data = {
+      appName: appName,
+      moduleIds: checkedRows,
+    };
+
+    axios
+      .put(url, data)
+      .then((response) => {
+        console.log(response.data);
+        getData();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleRowClick = (index) => {
@@ -81,6 +94,10 @@ function ModuleTable() {
     getData();
   };
 
+  const handleEdit = (id: any) => () => {
+    console.log(id);
+  };
+
   return (
     <div className="module-table">
       <h1 className="table-heading">Module Table</h1>
@@ -93,6 +110,7 @@ function ModuleTable() {
               <TableCell style={{ width: "50px" }}>S/N</TableCell>
               <TableCell>Module Name</TableCell>
               <TableCell>Module Protocol</TableCell>
+              <TableCell>Application Name</TableCell>
               <TableCell style={{ width: "10px" }} />
               <TableCell style={{ width: "10px" }} />
             </TableRow>
@@ -104,7 +122,7 @@ function ModuleTable() {
                   <TableCell>
                     <Checkbox
                       onChange={(event) =>
-                        handleCheckboxChange(event, module.moduleName)
+                        handleCheckboxChange(event, module._id)
                       }
                     />
                   </TableCell>
@@ -124,6 +142,7 @@ function ModuleTable() {
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{module.moduleName}</TableCell>
                   <TableCell>{module.protocol}</TableCell>
+                  <TableCell>{module.Application}</TableCell>
                   <TableCell>
                     <IconButton
                       aria-label="delete"
@@ -134,7 +153,11 @@ function ModuleTable() {
                     </IconButton>
                   </TableCell>
                   <TableCell>
-                    <IconButton aria-label="edit" size="small">
+                    <IconButton
+                      aria-label="edit"
+                      size="small"
+                      onClick={handleEdit(module._id)}
+                    >
                       <EditIcon />
                     </IconButton>
                   </TableCell>

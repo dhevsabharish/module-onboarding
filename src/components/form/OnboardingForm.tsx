@@ -30,6 +30,7 @@ const OnboardingForm = () => {
         validator={validator}
         customValidate={customValidate}
         formData={formData}
+        className="formComp"
       />
     </div>
   );
