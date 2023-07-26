@@ -128,7 +128,7 @@ function ModuleTable() {
                     <IconButton
                       aria-label="delete"
                       size="small"
-                      onClick={handleDelete(module.id)}
+                      onClick={handleDelete(module._id)}
                     >
                       <Delete />
                     </IconButton>
