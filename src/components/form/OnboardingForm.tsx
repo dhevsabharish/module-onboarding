@@ -11,15 +11,18 @@ const OnboardingForm = () => {
   const [formData, setFormData] = useState({});
 
   const onSubmit = (data) => {
-    axios
-      .post("http://localhost:8080/api/modules", data.formData)
-      .then(() => {
+    async function submitForm() {
+      try {
+        await axios.post("http://localhost:8080/api/modules", data.formData);
         alert("Form submitted successfully!");
+        console.log(data.formData);
         setFormData({});
-      })
-      .catch(() => {
+      } catch (error) {
         alert("Form submission failed.");
-      });
+      }
+    }
+
+    submitForm();
   };
 
   return (

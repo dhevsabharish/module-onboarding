@@ -12,7 +12,6 @@ const uiSchema: UiSchema = {
   testCaseFields: {
     items: {
       name: {
-        "ui:autofocus": true,
         "ui:emptyValue": "",
       },
       type: {
@@ -47,26 +46,26 @@ const uiSchema: UiSchema = {
         "ui:widget": CustomValuesWidget,
         "ui:placeholder": "Enter comma-separated list of values",
       },
-      subcategories: {
-        "ui:options": {
-          addable: true,
-          orderable: true,
-          removable: true,
-        },
-        items: {
-          subcatName: {
-            "ui:placeholder": "Enter subcategory name",
-          },
-          parentCatVal: {
-            "ui:placeholder": "Enter parent category value",
-          },
-          configurations: {
-            label: "Configurations",
-            "ui:widget": CustomValuesWidget,
-            "ui:placeholder": "Enter comma-separated list of configurations",
-          },
-        },
-      },
+      // subcategories: {
+      //   "ui:options": {
+      //     addable: true,
+      //     orderable: true,
+      //     removable: true,
+      //   },
+      //   items: {
+      //     subcatName: {
+      //       "ui:placeholder": "Enter subcategory name",
+      //     },
+      //     parentCatVal: {
+      //       "ui:placeholder": "Enter parent category value",
+      //     },
+      //     configurations: {
+      //       label: "Configurations",
+      //       "ui:widget": CustomValuesWidget,
+      //       "ui:placeholder": "Enter comma-separated list of configurations",
+      //     },
+      //   },
+      // },
     },
   },
 };

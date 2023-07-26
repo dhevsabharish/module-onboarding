@@ -12,7 +12,7 @@ const schema: RJSFSchema = {
     protocol: {
       type: "string",
       title: "Module Protocol",
-      enum: ["http", "gRPC"],
+      enum: ["HTTP", "gRPC"],
     },
     categories: {
       type: "array",
@@ -32,39 +32,32 @@ const schema: RJSFSchema = {
               type: "string",
             },
           },
-          subcategories: {
-            type: "array",
-            title: "Subcategories",
-            items: {
-              type: "object",
-              title: "Subcategory",
-              properties: {
-                subcatName: {
-                  type: "string",
-                  title: "Subcategory Name",
-                },
-                parentCatVal: {
-                  type: "string",
-                  title: "Parent Category Value",
-                },
-                configurations: {
-                  type: "array",
-                  title: "Configurations",
-                  items: {
-                    type: "string",
-                  },
-                },
-              },
-            },
-          },
+          // subcategories: {
+          //   type: "array",
+          //   title: "Subcategories",
+          //   items: {
+          //     type: "object",
+          //     title: "Subcategory",
+          //     properties: {
+          //       subcatName: {
+          //         type: "string",
+          //         title: "Subcategory Name",
+          //       },
+          //       parentCatVal: {
+          //         type: "string",
+          //         title: "Parent Category Value",
+          //       },
+          //       configurations: {
+          //         type: "array",
+          //         title: "Configurations",
+          //         items: {
+          //           type: "string",
+          //         },
+          //       },
+          //     },
+          //   },
+          // },
         },
-      },
-    },
-    testCaseFields: {
-      type: "array",
-      title: "Custom Testcase Fields",
-      items: {
-        $ref: "#/definitions/testCaseField",
       },
     },
     moduleURLs: {
@@ -87,6 +80,14 @@ const schema: RJSFSchema = {
           },
         },
       },
+    },
+    testCaseFields: {
+      type: "array",
+      title: "Custom Testcase Fields",
+      items: {
+        $ref: "#/definitions/testCaseField",
+      },
+      minItems: 8
     },
   },
   required: ["moduleName", "protocol"],
@@ -122,19 +123,49 @@ const schema: RJSFSchema = {
         {
           properties: {
             protocol: {
-              const: "http",
+              const: "HTTP",
             },
           },
           default: {
             testCaseFields: [
               {
-                name: "httpHeader",
+                name: "HTTP Method",
+                type: "Dropdown",
+                required: true,
+              },
+              {
+                name: "HTTP URL Path",
                 type: "TextField",
                 required: true,
               },
               {
-                name: "httpBody",
+                name: "Request Headers",
                 type: "TextArea",
+                required: true,
+              },
+              {
+                name: "Request Body",
+                type: " TextArea",
+                required: false,
+              },
+              {
+                name: "Expected Response Code",
+                type: "TextField",
+                required: false,
+              },
+              {
+                name: "Expected Response",
+                type: "TextArea",
+                required: false,
+              },
+              {
+                name: "Expected Content Type",
+                type: "TextField",
+                required: false,
+              },
+              {
+                name: "Expected Buffer Length",
+                type: "TextField",
                 required: false,
               },
             ],
@@ -149,16 +180,47 @@ const schema: RJSFSchema = {
           default: {
             testCaseFields: [
               {
-                name: "gRPCHeader",
-                type: "TextAield",
-                required: true,
+                "name": "Service Method",
+                "type": "TextField",
+                "required": true
               },
               {
-                name: "gRPCBody",
-                type: "TextArea",
-                required: false,
+                "name": "Request Message",
+                "type": "TextArea",
+                "required": true
               },
-            ],
+              {
+                "name": "Response Message",
+                "type": "TextArea",
+                "required": true
+              },
+              {
+                "name": "RPC Endpoint",
+                "type": "TextField",
+                "required": true
+              },
+              {
+                "name": "Serialization and Deserialization",
+                "type": "Dropdown",
+                "required": true
+              },
+              {
+                "name": "SSL/TLS",
+                "type": "Dropdown",
+                "required": false
+              },
+              {
+                "name": "Error Handling",
+                "type": "TextField",
+                "required": false
+              },
+              {
+                "name": "Metadata",
+                "type": "TextArea",
+                "required": false
+              }
+            ]
+            ,
           },
         },
       ],
