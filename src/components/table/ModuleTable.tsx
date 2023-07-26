@@ -23,7 +23,7 @@ import axios from "axios";
 function ModuleTable() {
   const [modules, setModules] = useState<any>([]);
 
-  useEffect(() => {
+  function getData() {
     axios
       .get("http://localhost:8080/api/modules")
       .then((res) => {
@@ -31,6 +31,10 @@ function ModuleTable() {
         console.log(res.data);
       })
       .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
 
   const [expandedRows, setExpandedRows] = useState<any>([]);
@@ -63,6 +67,18 @@ function ModuleTable() {
       ? expandedRows.filter((i) => i !== index)
       : [...expandedRows, index];
     setExpandedRows(newExpandedRows);
+  };
+
+  const handleDelete = (id: any) => () => {
+    console.log(id);
+    axios
+      .delete(`http://localhost:8080/api/modules/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        getData();
+      })
+      .catch((err) => console.log(err));
+    getData();
   };
 
   return (
@@ -109,7 +125,11 @@ function ModuleTable() {
                   <TableCell>{module.moduleName}</TableCell>
                   <TableCell>{module.protocol}</TableCell>
                   <TableCell>
-                    <IconButton aria-label="delete" size="small">
+                    <IconButton
+                      aria-label="delete"
+                      size="small"
+                      onClick={handleDelete(module.id)}
+                    >
                       <Delete />
                     </IconButton>
                   </TableCell>
