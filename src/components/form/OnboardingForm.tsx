@@ -10,19 +10,15 @@ import { useState } from "react";
 const OnboardingForm = () => {
   const [formData, setFormData] = useState({});
 
-  const onSubmit = (data) => {
-    async function submitForm() {
-      try {
-        await axios.post("http://localhost:8080/api/modules", data.formData);
-        alert("Form submitted successfully!");
-        console.log(data.formData);
-        setFormData({});
-      } catch (error) {
-        alert("Form submission failed.");
-      }
+  const onSubmit = async (data) => {
+    console.log(data.formData);
+    try {
+      await axios.post("http://localhost:8080/api/modules", data.formData);
+      alert("Form submitted successfully!");
+      setFormData({});
+    } catch (error) {
+      alert("Form submission failed.");
     }
-
-    submitForm();
   };
 
   return (

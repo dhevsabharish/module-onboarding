@@ -103,7 +103,7 @@ const schema: RJSFSchema = {
         type: {
           type: "string",
           title: "Test Case Field Type",
-          examples: ["TextField", "Dropdown", "TextArea"],
+          enum: ["TextField", "Dropdown", "TextArea"],
         },
         description: {
           type: "string",
@@ -145,7 +145,7 @@ const schema: RJSFSchema = {
               },
               {
                 name: "Request Body",
-                type: " TextArea",
+                type: "TextArea",
                 required: false,
               },
               {
