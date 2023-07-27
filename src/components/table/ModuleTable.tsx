@@ -70,6 +70,7 @@ function ModuleTable() {
         console.log(response.data);
         getData();
         setCheckedRows([]);
+        setAppName("");
       })
       .catch((error) => {
         console.error(error);
@@ -228,9 +229,6 @@ function ModuleTable() {
                             </TableBody>
                           </Table>
                         </TableContainer>
-                        {/* {module.categories && (
-                          <CategoryTable categories={module.categories} />
-                        )} */}
                         <TableContainer
                           component={Paper}
                           className="table-container"
@@ -283,64 +281,5 @@ function ModuleTable() {
     </div>
   );
 }
-
-// const modules = [
-//   {
-//     moduleName: "Module 1",
-//     protocol: "Protocol 1",
-//     testCaseFields: [
-//       {
-//         name: "Field 1",
-//         type: "TextArea",
-//         required: true,
-//         description: "Description 1",
-//       },
-//       {
-//         name: "Field 2",
-//         type: "Dropdown",
-//         required: false,
-//         description: "Description 2",
-//       },
-//     ],
-//     moduleURLs: [
-//       {
-//         categoryNames: ["Category 1", "Category 2", "Category 3"],
-//         url: "https://example.com",
-//       },
-//       {
-//         categoryNames: ["Category 2", "Category 3"],
-//         url: "https://example.com",
-//       },
-//     ],
-//     categories: [
-//       {
-//         name: "Device",
-//         values: ["TV", "Desktop", "Watch", "Mobile"],
-//       },
-//       {
-//         name: "Language",
-//         values: ["English", "Hindi", "French", "German"],
-//       },
-//     ],
-//   },
-//   {
-//     moduleName: "Module 2",
-//     protocol: "Protocol 2",
-//     testCaseFields: [
-//       {
-//         name: "Field 3",
-//         type: "TextField",
-//         required: true,
-//         description: "Description 3",
-//       },
-//     ],
-//     moduleURLs: [
-//       {
-//         categoryNames: ["Category 3", "Category 4"],
-//         url: "https://example.com",
-//       },
-//     ],
-//   },
-// ];
 
 export default ModuleTable;
