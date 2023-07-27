@@ -8,6 +8,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import Button from "@mui/material/Button";
 
 const OnboardingForm = () => {
   const [formData, setFormData] = useState({});
@@ -61,7 +62,16 @@ const OnboardingForm = () => {
         customValidate={customValidate}
         formData={formData}
         className="formComp"
-      />
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          style={{ marginTop: "10px" }}
+        >
+          {addOrEdit === "Add" ? "Add Module" : "Update Module"}
+        </Button>
+      </Form>
     </div>
   );
 };

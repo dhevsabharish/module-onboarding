@@ -169,6 +169,7 @@ const schema: RJSFSchema = {
                 {
                   name: "HTTP Method",
                   type: "Dropdown",
+                  DropdownValues: ["GET", "POST", "PUT", "DELETE", "PATCH"],
                   required: true,
                 },
                 {
