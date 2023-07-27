@@ -69,6 +69,7 @@ function ModuleTable() {
       .then((response) => {
         console.log(response.data);
         getData();
+        setCheckedRows([]);
       })
       .catch((error) => {
         console.error(error);
@@ -124,6 +125,7 @@ function ModuleTable() {
                 <TableRow hover>
                   <TableCell>
                     <Checkbox
+                      checked={checkedRows.includes(module._id)}
                       onChange={(event) =>
                         handleCheckboxChange(event, module._id)
                       }
