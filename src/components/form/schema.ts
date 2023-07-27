@@ -246,11 +246,13 @@ const schema: RJSFSchema = {
                 {
                   "name": "Serialization and Deserialization",
                   "type": "Dropdown",
+                  "DropdownValues": ["Protobuf", "JSON", "XML", "YAML", "MessagePack", "Thrift", "Avro"],
                   "required": true
                 },
                 {
                   "name": "SSL/TLS",
                   "type": "Dropdown",
+                  "DropdownValues": ["Enabled", "Disabled", "Optional", "Required", "Custom Certificate"],
                   "required": false
                 },
                 {
