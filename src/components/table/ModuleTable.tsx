@@ -19,6 +19,7 @@ import TextField from "@mui/material/TextField";
 import Delete from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ModuleTable() {
   const [modules, setModules] = useState<any>([]);
@@ -94,8 +95,10 @@ function ModuleTable() {
     getData();
   };
 
-  const handleEdit = (id: any) => () => {
-    console.log(id);
+  const navigate = useNavigate();
+  const handleEdit = (module: any) => () => {
+    console.log(module);
+    navigate("/form", { state: { moduleToUpdate: module } });
   };
 
   return (
@@ -156,7 +159,7 @@ function ModuleTable() {
                     <IconButton
                       aria-label="edit"
                       size="small"
-                      onClick={handleEdit(module._id)}
+                      onClick={handleEdit(module)}
                     >
                       <EditIcon />
                     </IconButton>

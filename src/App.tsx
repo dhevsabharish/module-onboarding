@@ -1,25 +1,27 @@
-import { useState } from "react";
 import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import OnboardingForm from "./components/form/OnboardingForm";
 import ModuleTable from "./components/table/ModuleTable";
-import './App.css'
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState("myModules");
-
-  const handlePageChange = (page: string) => {
-    setCurrentPage(page);
+  const Content = () => {
+    return (
+      <Routes>
+        <Route path="/" element={<ModuleTable />} />
+        <Route path="/form" element={<OnboardingForm />} />
+      </Routes>
+    );
   };
 
   return (
     <div className="App">
       <Topbar />
       <div className="container">
-        <Sidebar currentPage={currentPage} handlePageChange={handlePageChange} />
+        <Sidebar />
         <div className="others">
-          {currentPage === "myModules" && <ModuleTable />}
-          {currentPage === "addModule" && <OnboardingForm />}
+          <Content />
         </div>
       </div>
     </div>
