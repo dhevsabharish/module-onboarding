@@ -214,6 +214,63 @@ const schema: RJSFSchema = {
         {
           properties: {
             protocol: {
+              const: "HTTP Session",
+            },
+            testCaseFields: {
+              type: "array",
+              title: "Custom Testcase Fields",
+              items: {
+                $ref: "#/definitions/testCaseField",
+              },
+              default: [
+                {
+                  name: "HTTP Method",
+                  type: "Dropdown",
+                  DropdownValues: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+                  required: true,
+                },
+                {
+                  name: "HTTP URL Path",
+                  type: "TextField",
+                  required: true,
+                },
+                {
+                  name: "Request Headers",
+                  type: "TextArea",
+                  required: true,
+                },
+                {
+                  name: "Request Body",
+                  type: "TextArea",
+                  required: false,
+                },
+                {
+                  name: "Expected Response Code",
+                  type: "TextField",
+                  required: false,
+                },
+                {
+                  name: "Expected Response",
+                  type: "TextArea",
+                  required: false,
+                },
+                {
+                  name: "Expected Content Type",
+                  type: "TextField",
+                  required: false,
+                },
+                {
+                  name: "Expected Buffer Length",
+                  type: "TextField",
+                  required: false,
+                },
+              ],
+            },
+          },
+        },
+        {
+          properties: {
+            protocol: {
               const: "gRPC",
             },
             testCaseFields: {
