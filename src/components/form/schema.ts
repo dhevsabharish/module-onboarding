@@ -12,7 +12,7 @@ const schema: RJSFSchema = {
     protocol: {
       type: "string",
       title: "Module Protocol",
-      enum: ["HTTP", "gRPC"],
+      enum: ["HTTP", "gRPC", "HTTP Session"],
     },
     categories: {
       type: "array",
