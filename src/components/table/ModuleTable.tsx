@@ -20,13 +20,14 @@ import Delete from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function ModuleTable() {
   const [modules, setModules] = useState<any>([]);
 
   function getData() {
     axios
-      .get("http://localhost:8080/api/modules")
+      .get(`${apiUrl}/api/modules`)
       .then((res) => {
         setModules(res.data);
         console.log(res.data);
@@ -58,7 +59,7 @@ function ModuleTable() {
   };
 
   const handleGroupButtonClick = () => {
-    const url = "http://localhost:8080/api/modules";
+    const url = `${apiUrl}/api/modules`;
     const data = {
       appName: appName,
       moduleIds: checkedRows,
@@ -88,7 +89,7 @@ function ModuleTable() {
   const handleDelete = (id: any) => () => {
     console.log(id);
     axios
-      .delete(`http://localhost:8080/api/modules/${id}`)
+      .delete(`${apiUrl}/api/modules/${id}`)
       .then((res) => {
         console.log(res.data);
         getData();

@@ -9,6 +9,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Button from "@mui/material/Button";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const OnboardingForm = () => {
   const [formData, setFormData] = useState({});
@@ -20,7 +21,7 @@ const OnboardingForm = () => {
     console.log(data.formData);
     if (addOrEdit === "Add") {
       try {
-        await axios.post("http://localhost:8080/api/modules", data.formData);
+        await axios.post(`${apiUrl}/api/modules`, data.formData);
         alert("Form submitted successfully!");
         setFormData({});
         navigate("/");
@@ -29,10 +30,7 @@ const OnboardingForm = () => {
       }
     } else {
       try {
-        await axios.put(
-          `http://localhost:8080/api/modules/${idToUpdate}`,
-          data.formData
-        );
+        await axios.put(`${apiUrl}/api/modules/${idToUpdate}`, data.formData);
         alert("Form updated successfully!");
         setFormData({});
         navigate("/");
